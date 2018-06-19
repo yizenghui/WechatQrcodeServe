@@ -1,0 +1,85 @@
+﻿{{define "home"}}
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Jekyll v3.5.2">
+
+<title>
+  
+    Golang 实现网页获取微信公众号粉丝OpenID示例
+  
+</title>
+
+
+
+
+  <link href="https://v4.bootcss.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" href="https://v4.bootcss.com/apple-touch-icon.png">
+<link rel="icon" href="https://v4.bootcss.com/favicon.ico">
+
+<!-- Bootstrap core CSS -->
+
+  </head>
+  
+  <body>
+    
+    
+<div class="container"> <!--start container  -->
+
+生成二维码后扫描即可<br>
+<img src id="qrcode">
+</div> <!--end container  -->
+
+<script src="https://weui.io/zepto.min.js"></script>
+
+
+<script>
+
+
+    //开启第一种定时器，每隔三秒执行一次
+    var setTimeoutName ;
+    var token ;
+    var i = 0;
+
+    $.get('/new',function(data){
+      console.log(data);
+      token = data.ID
+      $('#qrcode').attr("src",data.URL);
+    });
+
+    var setTimeoutDemo = function(){
+        console.log("第一种定时器执行第："+(++i)+"次");
+        if(token){
+          $.get('/check/'+token,function(data){
+            if(data.OpenID){
+              alert(data.OpenID);
+              // clearTimeout(setTimeoutName);
+              clearInterval(setTimeoutName)
+            }
+          });
+        }
+    }
+
+    setTimeoutName = setInterval(setTimeoutDemo,2000);
+
+    //关闭定时器
+    function clearTimeoutDemo(){
+        clearTimeout(setTimeoutName);
+        i = 0;
+        alert("关闭定时器成功");
+    }
+
+  $.get('/new',function(data){
+    console.log(data);
+    token = data.ID
+    $('#qrcode').attr("src",data.URL);
+  });
+</script>
+  </body>
+</html>
+
+{{end}}
