@@ -29,13 +29,12 @@
     
     
 <div class="container"> <!--start container  -->
-
+<p>这个示例仅用于测试展示，不作其它用途<p>
 生成二维码后扫描即可<br>
 <img src id="qrcode">
 </div> <!--end container  -->
 
-<script src="https://weui.io/zepto.min.js"></script>
-
+<script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
 
 <script>
 
@@ -44,12 +43,6 @@
     var setTimeoutName ;
     var token ;
     var i = 0;
-
-    $.get('/new',function(data){
-      console.log(data);
-      token = data.ID
-      $('#qrcode').attr("src",data.URL);
-    });
 
     var setTimeoutDemo = function(){
         console.log("第一种定时器执行第："+(++i)+"次");
@@ -72,12 +65,13 @@
         i = 0;
         alert("关闭定时器成功");
     }
+	
+    $.get('/new',function(data){
+      console.log(data);
+      token = data.ID
+      $('#qrcode').attr("src",data.URL);
+    });
 
-  $.get('/new',function(data){
-    console.log(data);
-    token = data.ID
-    $('#qrcode').attr("src",data.URL);
-  });
 </script>
   </body>
 </html>
